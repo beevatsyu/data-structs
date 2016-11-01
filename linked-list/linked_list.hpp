@@ -20,8 +20,8 @@ class LinkedList {
 public:
 	LinkedList();
 	~LinkedList();
-	void Insert(T, T);
 	void Append(T);
+	void Insert(T, T);
 	void Delete(T);
 	void Display();
 };
@@ -50,6 +50,25 @@ void LinkedList<T>::Append(T item) {
 	*ptr = new Node<T>(item);
 }
 
+template <class T>
+void LinkedList<T>::Insert(T key, T item) {
+	for (Node<T> *ptr = head; ptr; ptr = ptr->next) {
+		if (ptr->data == key) {
+			break;
+		}
+	}
+	if (ptr) {
+		Node<T> *node = new Node<T>(item);
+		node->next = ptr->next;
+		ptr->next = node;
+		return;
+	}
+	std::cout << "WARNING: Insert key not found.\n";
+}
+
+template <class T>
+void LinkedList<T>::Delete(T key) {
+	
 template <class T>
 void LinkedList<T>::Display() {
 	for (Node<T> *ptr = head; ptr; ptr = ptr->next) {
