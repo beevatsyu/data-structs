@@ -7,6 +7,7 @@ int main(int argc, const char *argv[])
 	L1.Append(2);
 	L1.Append(5);
 	L1.Append(3);
-	L1.Display();
+    L1.Delete(6);
+	std::cout << L1;
 	return 0;
 }
