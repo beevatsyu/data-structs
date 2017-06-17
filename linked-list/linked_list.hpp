@@ -2,7 +2,7 @@
 #define LinkedList_H
 
 template<class T>
-class LinkedList {
+struct LinkedList {
     struct Node {
         T data;
         Node *next;
@@ -13,7 +13,6 @@ class LinkedList {
         }
     } *head;
 
-public:
     LinkedList();
 
     ~LinkedList();

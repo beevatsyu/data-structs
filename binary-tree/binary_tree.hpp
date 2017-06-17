@@ -7,36 +7,100 @@ class Tree {
 		T data;
 		Node *left;
 		Node *right;
-	} *root;
+		Node(T item) {
+			data = item;
+			left = right = NULL;
+		}
+	} *_root;
+	Node* _insert(Node*, T);
+	Node* _delete(Node*, T);
+	void _display(Node*);
 public:
-	Tree();
-	~Tree();
+	Tree() { _root = NULL; }
 	void Insert(T);
 	void Delete(T);
 	void Display(void);
 };
 
 template <class T>
+typename Tree<T>::Node* Tree<T>::_insert(Node *root, T item) {
+	if (!root) {
+		return new Node(item);
+	}
+	if (item < root->data) {
+		root->left = _insert(root->left, item);
+	} else if (item > root->data) {
+		root->right = _insert(root->right, item);
+	}
+	return root;
+}
+
+template <class T>
 void Tree<T>::Insert(T item) {
+	_root = _insert(_root, item);
+}
+
+template <class T>
+typename Tree<T>::Node* Tree<T>::_delete(Node *root, T item) {
+	if (!root) {
+		return root;
+	}
+
+	if (root->data == item) {
+		if (!root->left && !root->right) { // has no child
+			delete root;
+			return NULL;
+		}
+		if (!root->left) { // has right child only
+			Node *ptr = root;
+			root = root->right;
+			delete ptr;
+		} else if (!root->right) { // has left child only
+			Node *ptr = root;
+			root = root->left;
+			delete ptr;
+		} else { // has both the children
+			Node *pptr = root;
+			Node *ptr = root->left;
+			while (ptr->right) {
+				pptr = ptr;
+				ptr = ptr->right;
+			}
+			if (pptr == root) {
+				pptr->left = ptr->left;
+			} else {
+				pptr->right = ptr->left;
+			}
+			root->data = ptr->data;
+			delete ptr;
+		}
+	}
+
+	if (item < root->data) {
+		root->left = _delete(root->left, item);
+	} else if (item > root->data) {
+		root->right = _delete(root->right, item);
+	}
+	return root;
 }
 
 template <class T>
 void Tree<T>::Delete(T item) {
+	_root = _delete(_root, item);
+}
+
+template <class T>
+void Tree<T>::_display(Node *root) {
+	if (root) {
+		_display(root->left);
+		std::cout << root->data << '\n';
+		_display(root->right);
+	}
 }
 
 template <class T>
 void Tree<T>::Display() {
-	std::stack<Node*> stk;
-	if (root) {
-		stk.push(root);
-		while (!stk.empty()) {
-			Node *tmp = stk.top();
-			stk.pop();
-			std::cout << tmp->data << ' ';
-			stk.push(tmp->right);
-			stk.push(tmp->left);
-		}
-	}
+	_display(_root);
 }
 
 #endif /* TREE_HPP */
