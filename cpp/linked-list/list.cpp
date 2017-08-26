@@ -62,20 +62,63 @@ void insert_into_sorted(List& L, int item) {
 	*ptr = node;
 }
 
+/*
+ * Intersection node
+ */
+Node* find_intersection(List& L1, List& L2) {
+	Node *node = NULL;
+	Node *slow = L1.head;
+	Node *fast = L2.head;
+
+	while (1) {
+		if (slow == fast) {
+			node = slow;
+			break;
+		}
+		slow = slow->next ? slow->next : L1.head;
+		fast = fast->next && fast->next->next ?
+			fast->next->next : L2.head;
+		if (slow == L1.head && fast == L2.head) {
+			break; /* completed the cycle */
+		}
+	}
+
+	return node;
+}
+
+/*
+ * Reverse list in groups
+ */
+Node* rev_group(Node *head, int k) {
+	Node *beg = head;
+	Node *end = beg;
+	for (int i = 0; i < k - 1 && end->next; i++) {
+		end = end->next;
+	}
+	if (end->next == NULL) {
+		return head;
+	}
+	Node *beg1 = end->next;
+	Node *end1 = beg1;
+	for (int i = 0; i < k - 1 && end1->next; i++) {
+		end1 = end1->next;
+	}
+	Node *node = rev_group(beg1, k);
+	end1->next = beg;
+	end->next = NULL;
+}
+
 int main(int argc, const char *argv[])
 {
-	List L1, L2;
+	List L1;
 	L1.Append(2);
 	L1.Append(5);
 	L1.Append(7);
 	L1.Append(9);
-	insert_into_sorted(L1, 4);
-
-	L2.Append(3);
-	L2.Append(8);
-	L2.Append(6);
+	L1.Append(4);
+	L1.Append(3);
+	L1.Append(8);
+	L1.Append(6);
 	std::cout << L1;
-	std::cout << L2;
-	std::cout << L1 + L2;
 	return 0;
 }

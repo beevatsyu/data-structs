@@ -11,6 +11,12 @@ struct LinkedList {
             data = item;
             next = 0;
         }
+    	template<class U> friend
+    	std::ostream &operator<<(std::ostream& out,
+				 const typename LinkedList<U>::Node& node) {
+    	    out << node.data;
+	    return out << '\n';
+	}
     } *head;
 
     LinkedList();
@@ -22,7 +28,7 @@ struct LinkedList {
     void Delete(T);
 
     template<class U> friend
-    std::ostream &operator<<(std::ostream &, const LinkedList<U> &);
+    std::ostream &operator<<(std::ostream&, const LinkedList<U>&);
 };
 
 template<class T>
@@ -61,6 +67,13 @@ void LinkedList<T>::Delete(T key) {
         delete temp;
     }
 }
+
+//template<class T>
+//std::ostream &operator<<(std::ostream& out,
+//			 const typename LinkedList<T>::Node& node) {
+//    out << node.data;
+//    return out << '\n';
+//}
 
 template<class T>
 std::ostream& operator<<(std::ostream& out, const LinkedList<T>& list) {

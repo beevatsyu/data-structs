@@ -2,7 +2,7 @@
 #define TREE_HPP
 
 template <class T>
-class Tree {
+class BSTree {
 	struct Node {
 		T data;
 		Node *left;
@@ -16,14 +16,14 @@ class Tree {
 	Node* _delete(Node*, T);
 	void _display(Node*);
 public:
-	Tree() { _root = NULL; }
+	BSTree() { _root = NULL; }
 	void Insert(T);
 	void Delete(T);
 	void Display(void);
 };
 
 template <class T>
-typename Tree<T>::Node* Tree<T>::_insert(Node *root, T item) {
+typename BSTree<T>::Node* BSTree<T>::_insert(Node *root, T item) {
 	if (!root) {
 		return new Node(item);
 	}
@@ -36,12 +36,12 @@ typename Tree<T>::Node* Tree<T>::_insert(Node *root, T item) {
 }
 
 template <class T>
-void Tree<T>::Insert(T item) {
+void BSTree<T>::Insert(T item) {
 	_root = _insert(_root, item);
 }
 
 template <class T>
-typename Tree<T>::Node* Tree<T>::_delete(Node *root, T item) {
+typename BSTree<T>::Node* BSTree<T>::_delete(Node *root, T item) {
 	if (!root) {
 		return root;
 	}
@@ -85,12 +85,12 @@ typename Tree<T>::Node* Tree<T>::_delete(Node *root, T item) {
 }
 
 template <class T>
-void Tree<T>::Delete(T item) {
+void BSTree<T>::Delete(T item) {
 	_root = _delete(_root, item);
 }
 
 template <class T>
-void Tree<T>::_display(Node *root) {
+void BSTree<T>::_display(Node *root) {
 	if (root) {
 		_display(root->left);
 		std::cout << root->data << '\n';
@@ -99,7 +99,7 @@ void Tree<T>::_display(Node *root) {
 }
 
 template <class T>
-void Tree<T>::Display() {
+void BSTree<T>::Display() {
 	_display(_root);
 }
 

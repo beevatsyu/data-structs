@@ -18,7 +18,6 @@ class BTree:
             print root.data
             self._inorder(root.right)
 
-
 class BSTree(BTree):
     def insert(self, item):
         self.root = self._insert(self.root, item)
@@ -37,9 +36,9 @@ class BSTree(BTree):
         pass
 
 
-bt = BSTree()
-bt.insert(2)
-bt.insert(1)
-bt.insert(3)
-bt.insert(5)
-bt.inorder()
+bst = BSTree()
+bst.insert(2)
+bst.insert(1)
+bst.insert(3)
+bst.insert(5)
+bst.inorder()
